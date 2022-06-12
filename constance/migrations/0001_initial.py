@@ -6,9 +6,7 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-        ('database', '0002_auto_20190129_2304'),
-    ]
+    dependencies = [('database', '0002_auto_20190129_2304')]
     run_before = [('database', '0003_delete_constance')]
 
     operations = [
