@@ -9,7 +9,7 @@ from django.utils.encoding import smart_str
 from io import StringIO
 
 from constance import config
-from constance.models import Constance
+from constance.models import Config
 
 
 class CliTestCase(TransactionTestCase):
@@ -75,9 +75,9 @@ class CliTestCase(TransactionTestCase):
 
     def test_delete_stale_records(self):
 
-        initial_count = Constance.objects.count()
+        initial_count = Config.objects.count()
 
-        Constance.objects.create(key='STALE_KEY', value=None)
+        Config.objects.create(key='STALE_KEY', value=None)
         call_command('constance', 'remove_stale_keys', stdout=self.out)
 
-        self.assertEqual(Constance.objects.count(), initial_count, msg=self.out)
+        self.assertEqual(Config.objects.count(), initial_count, msg=self.out)
