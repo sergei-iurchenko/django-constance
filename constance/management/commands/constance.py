@@ -7,7 +7,7 @@ from django import VERSION
 
 from ... import config
 from ...admin import ConstanceForm, get_values
-from ...models import Constance
+from ...models import Config
 
 
 def _set_constance_value(key, value):
@@ -84,7 +84,7 @@ class Command(BaseCommand):
 
             actual_keys = settings.CONSTANCE_CONFIG.keys()
 
-            stale_records = Constance.objects.exclude(key__in=actual_keys)
+            stale_records = Config.objects.exclude(key__in=actual_keys)
             if stale_records:
                 self.stdout.write("The following record will be deleted:", ending="\n")
             else:

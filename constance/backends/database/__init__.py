@@ -9,13 +9,14 @@ from django.db import (
 )
 from django.db.models.signals import post_save
 
-from constance.backends import Backend
-from constance import settings, signals, config
+from .. import Backend
+from ... import settings, signals, config
 
 
 class DatabaseBackend(Backend):
     def __init__(self):
         from constance.models import Config
+
         self._model = Config
         self._prefix = settings.DATABASE_PREFIX
         self._autofill_timeout = settings.DATABASE_CACHE_AUTOFILL_TIMEOUT
@@ -24,7 +25,8 @@ class DatabaseBackend(Backend):
         if not self._model._meta.installed:
             raise ImproperlyConfigured(
                 "The constance.backends.database app isn't installed "
-                "correctly. Make sure it's in your INSTALLED_APPS setting.")
+                "correctly. Make sure it's in your INSTALLED_APPS setting."
+            )
 
         if settings.DATABASE_CACHE_BACKEND:
             self._cache = caches[settings.DATABASE_CACHE_BACKEND]
@@ -33,7 +35,8 @@ class DatabaseBackend(Backend):
                     "The CONSTANCE_DATABASE_CACHE_BACKEND setting refers to a "
                     "subclass of Django's local-memory backend (%r). Please "
                     "set it to a backend that supports cross-process caching."
-                    % settings.DATABASE_CACHE_BACKEND)
+                    % settings.DATABASE_CACHE_BACKEND
+                )
         else:
             self._cache = None
         self.autofill()

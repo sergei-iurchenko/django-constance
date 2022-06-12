@@ -11,17 +11,14 @@ except ImportError:
                                "the constance database backend.")
 
 
-class Constance(models.Model):
+class Config(models.Model):
     key = models.CharField(max_length=255, unique=True)
     value = PickledObjectField(null=True, blank=True)
 
     class Meta:
         verbose_name = _('constance')
         verbose_name_plural = _('constances')
-        permissions = [
-            ('change_config', 'Can change config'),
-            ('view_config', 'Can view config'),
-        ]
+        default_permissions = ('view', 'change')
 
     def __str__(self):
         return self.key
